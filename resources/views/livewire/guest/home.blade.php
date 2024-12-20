@@ -1,4 +1,4 @@
-<div>
+<div class="flex-1">
     <style>
         body {
             /* font-family: 'Poppins', sans-serif;
@@ -12,13 +12,13 @@
             width: 100% */
         }
     </style>
-    <div class="mt-20 px-6 w-full md:px-24 relative">
+    <div class="mt-20 w-full">
         <div
-            class="text-6xl md:text-9xl md:font-normal md:w-4/5 md:font-mono font-medium leading-tight text-sky-900 font-sans md:mb-6">
+            class="text-6xl md:text-9xl md:font-normal md:w-4/5 md:font-mono font-medium leading-tight text-sky-900 font-sans md:mb-6 px-6 md:px-24">
             Every sign-in, <span class="text-sky-700">secure</span>
         </div>
 
-        <div class="text-xl md:text-4xl text-sky-900 font-sans mb-16">
+        <div class="text-xl md:text-4xl text-sky-900 font-sans mb-16 px-6 md:px-24">
             <div class="ml-auto md:px-6 md:w-2/5">
                 <p class="pt-12 pb-6">{{ env('APP_NAME') }} is so much more than a password manager.</p>
 
@@ -34,8 +34,8 @@
 
         </div>
 
-        <div class="py-10 px-8 bg-indigo-950 rounded-3xl absolute left-0 w-full text-slate-200">
-            <h2 class="text-3xl font-normal font-sans mb-8 md:py-20 md:px-16 md:text-6xl md:w-2/3">Security and
+        <div class="py-10 px-8 md:px-24 bg-indigo-950 rounded-3xl w-full text-slate-200">
+            <h2 class="text-3xl font-normal font-sans mb-8 md:py-20 md:px-16 md:text-6xl md:w-2/3 px-6">Security and
                 productivity wrapped into one</h2>
 
             <div class="flex flex-col md:flex-row w-full">

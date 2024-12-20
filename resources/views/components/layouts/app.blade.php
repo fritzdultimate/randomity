@@ -7,8 +7,9 @@
 
         <title>{{ $title ?? 'Page Title' }}</title>
     </head>
-    <body class="bg-repeat bg-fixed bg-white h-screen bg-tiny-water-droplets">
+    <body class="bg-repeat bg-fixed bg-white min-h-screen bg-tiny-water-droplets flex flex-col relative">
         @include('components.guest.header.header')
         {{ $slot }}
+        @include('components.guest.footer.footer')
     </body>
 </html>
