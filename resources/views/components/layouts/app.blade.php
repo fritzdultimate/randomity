@@ -11,5 +11,7 @@
         @include('components.guest.header.header')
         {{ $slot }}
         @include('components.guest.footer.footer')
+
+        @stack('scripts')
     </body>
 </html>

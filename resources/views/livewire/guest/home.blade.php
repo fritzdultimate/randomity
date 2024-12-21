@@ -1,4 +1,4 @@
-<div class="flex-1">
+<div class="flex-1 mb-32">
     <style>
         body {
             /* font-family: 'Poppins', sans-serif;

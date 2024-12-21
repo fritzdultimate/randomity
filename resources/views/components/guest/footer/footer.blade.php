@@ -1,4 +1,4 @@
-<div class="bg-indigo-950 text-slate-200 mt-20 md:px-20 py-10 md:py-16 flex flex-col">
+<div class="bg-indigo-950 text-slate-200 md:px-20 py-10 md:py-16 flex flex-col w-full">
     <h1 class="text-3xl md:text-5xl font-semibold md:font-bold font-sans px-4">
         {{ env("APP_NAME") }}
     </h1>

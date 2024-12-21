@@ -9,8 +9,8 @@
 
         <!-- Desktop Buttons -->
         <div class="hidden md:flex space-x-6 items-center">
-            <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors duration-300">Login</a>
-            <a href="#"
+            <a href="/sign/in" class="text-gray-700 hover:text-blue-600 transition-colors duration-300">Login</a>
+            <a href="/sign/up"
                 class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-all duration-300 shadow-md">
                 Register
             </a>
@@ -36,9 +36,9 @@
         x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-10"
         class="md:hidden bg-white shadow-md">
         <div class="flex flex-col items-center space-y-4 py-4 px-10">
-            <a href="#"
-                class="text-sky-700 bg-sky-100 hover:text-blue-50 transition-colors duration-300 w-full py-2 text-center text-base font-semibold rounded-md hover:bg-sky-600">Login</a>
-            <a href="#"
+            <a href="/sign/in"
+                class="text-sky-700 bg-sky-100 hover:text-sky-900 transition-colors duration-300 w-full py-2 text-center text-base font-semibold rounded-md hover:bg-sky-200">Login</a>
+            <a href="/sign/up"
                 class="bg-sky-600 text-sky-50 px-4 py-2 rounded-md hover:bg-sky-700 transition-all duration-300 shadow-md w-full text-center text-base font-semibold">
                 Register
             </a>
