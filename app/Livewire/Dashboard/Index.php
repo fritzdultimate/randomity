@@ -37,10 +37,22 @@ class Index extends Component {
                 $this->passphrase = collect($wordList)->random($this->size)->toArray();
                 $history = Passphrase::create([
                     'user_id' => Auth::id(),
-                    'passphrase' => Crypt::encryptString(json_encode($this->passphrase)),
+                    'passphrase' =>  json_encode($this->passphrase),
                 ]);
                 if($history) {
-                    array_push($this->passphraseHistory, $this->passphrase);
+                    // Add the newly generated passphrase to today's group
+                    if (!isset($this->passphraseHistory['today'])) {
+                        $this->passphraseHistory['today'] = [];
+                    }
+                    // $this->passphraseHistory['today'][] = [
+                    //     'passphrase' => $this->passphrase,
+                    //     'created_at' => Carbon::now()->toDateTimeString(),
+                    // ];
+
+                    array_unshift($this->passphraseHistory['today'], [
+                        'passphrase' => $this->passphrase,
+                        'created_at' => Carbon::now()->toDateTimeString(),
+                    ]);
                 }
             } catch (\Exception $e) {
                 //handle error
@@ -57,27 +69,25 @@ class Index extends Component {
             ->select('passphrase', 'created_at')
             ->orderBy('created_at', 'desc')
             ->get();
-
         // Decrypt passphrases and group them by day
         $groupedPassphrases = $passphrases->map(function ($item) {
-            $decryptedJson = Crypt::decrypt($item->passphrase);
             return [
-                'passphrase' => json_decode($decryptedJson, true),
+                'passphrase' => json_decode($item->passphrase, true),
                 'created_at' => $item->created_at,
             ];
         })->groupBy(function ($item) {
-            return Carbon::parse($item['created_at'])->format('Y-m-d');
+            $today = Carbon::now()->format('Y-m-d');
+            $tomorrow = Carbon::parse($item['created_at'])->yesterday()->format('Y-m-d');
+            $date = Carbon::parse($item['created_at'])->format('Y-m-d');
+            if($today == $date) {
+                return 'today';
+            } elseif($tomorrow == $date) {
+                return 'yesterday';
+            }
+            return Carbon::parse($item['created_at'])->format('jS M, Y');
         })->toArray();
 
-        // Add the newly generated passphrase to today's group
-        $today = Carbon::now()->format('Y-m-d');
-        if (!isset($groupedPassphrases[$today])) {
-            $groupedPassphrases[$today] = [];
-        }
-        $groupedPassphrases[$today][] = [
-            'passphrase' => $this->passphrase,
-            'created_at' => Carbon::now()->toDateTimeString(),
-        ];
+        $this->passphraseHistory = $groupedPassphrases;
     }
 
     public function render() {

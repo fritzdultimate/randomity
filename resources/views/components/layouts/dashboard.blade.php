@@ -8,7 +8,7 @@
 
         <title>{{ $title ?? 'Page Title' }}</title>
     </head>
-    <body class="bg-gray-100 h-screen flex">
+    <body class="bg-gray-100 h-full flex">
         {{ $slot }}
 
         @stack('scripts')

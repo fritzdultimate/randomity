@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Passphrase extends Model {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'passphrase'];
+    protected $fillable = ['user_id', 'passphrase', 'created_at', 'updated_at'];
 }
