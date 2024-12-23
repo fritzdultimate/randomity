@@ -22,9 +22,8 @@
             </div>
 
             <!-- Main Message -->
-            <h2 class="text-2xl font-semibold text-center text-green-800 mb-4">Registration Successful!</h2>
-            <p class="text-center text-gray-600 mb-6">our account has been created successfully. To complete the
-                process, please verify your account by clicking the link we sent to your email.</p>
+            <h2 class="text-2xl font-semibold text-center text-green-800 mb-4">Password Changed Successfully!</h2>
+            <p class="text-center text-gray-600 mb-6">Your password has now been updated, please not that, you have been logged out from every other devices to keep your account safe.</p>
 
             <!-- Verification Instructions -->
             <div class="flex items-center justify-center space-x-2 mb-6">
@@ -33,7 +32,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M3 4v16h18V4H3zM9 8h6M9 12h6M9 16h6" />
                 </svg>
-                <p class="text-gray-600">Please check your inbox (and spam folder) for the verification email.</p>
+                <p class="text-gray-600">You can change your password anytime.</p>
             </div>
 
             <!-- Button to Return to Home or Login -->

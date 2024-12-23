@@ -1,8 +1,7 @@
 <div class="flex justify-center items-center h-screen w-full p-2">
 
     <div x-data="{ showPassword: false, email: '', password: '', isValid: true }"
-        class="shadow-md shadow-slate-200 h-full w-full px-5 bg-white rounded-lg flex flex-col justify-center items-center"
-        id="registerForm">
+        class="shadow-md shadow-slate-200 h-full w-full px-5 bg-white rounded-lg flex flex-col justify-center items-center">
 
         <h1 class="capitalize text-slate-700 text-3xl font-bold font-sans py-4">Sign in</h1>
 
@@ -16,7 +15,7 @@
                         '-top-3 text-sm text-blue-600 bg-white px-1': isFocused || email !== '',
                         'top-4 text-gray-500': !(isFocused || email !== '')
                     }">
-                    Email or Username
+                    Email
                 </label>
 
                 <!-- Input -->
@@ -69,6 +68,9 @@
                         <div class="animate-spin rounded-full h-6 w-6 border-t-2 border-blue-600 border-solid border-b-2 border-b-red-500"></div>
                     </div>
                 </div>
+            </div>
+            <div class="flex mt-3 w-full md:max-w-lg mx-auto">
+                <a href="/account/recovery" class="text-sky-700 text-sm font-medium">Forgot password?</a>
             </div>
         </form>
 

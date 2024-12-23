@@ -11,6 +11,7 @@ class Register extends Component
     public $email = '';
     public $password = '';
     public $password_confirmation = '';
+    protected $username = '';
     protected $layout = 'layouts.app';
 
     protected function extractName($email)
@@ -18,6 +19,12 @@ class Register extends Component
         $name = explode('@', $email)[0];
         $nameParts = explode('.', $name);
 
+        return $nameParts[0];
+    }
+
+    public function getUsernameProperty() {
+        $name = explode('@', $this->email)[0];
+        $nameParts = explode('.', $name);
         return $nameParts[0];
     }
 
@@ -35,7 +42,7 @@ class Register extends Component
         ]);
         // send email for verification
 
-        return redirect()->route('registered');
+        return redirect()->route('registered')->with('account-registered', 'changed');
     }
     public function render()
     {

@@ -17,7 +17,7 @@ class Login extends Component
     protected $layout = 'layouts.app';
 
     public function submit() {
-        $user = User::where('email', $this->email)->orWhere('name', $this->email)->first();
+        $user = User::where('email', $this->email)->first();
         
         if(!$user) {
             $this->errorMsg = 'Account not found or password is incorrect.';

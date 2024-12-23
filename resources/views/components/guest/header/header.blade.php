@@ -2,7 +2,7 @@
 <header x-data="{ open: false }" class="bg-white shadow-md fixed top-0 left-0 w-full z-50">
     <div class="container mx-auto px-6 py-4 flex justify-between items-center">
         <!-- Logo -->
-        <a href="#"
+        <a href="{{ route('landing') }}"
             class="text-2xl font-bold text-blue-600 hover:text-blue-700 transition-transform transform hover:scale-105">
             RANDOMITY
         </a>
