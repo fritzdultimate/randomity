@@ -2,7 +2,10 @@
 
 namespace App\Livewire\Dashboard;
 
+use App\Models\Passphrase;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\File;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -14,6 +17,8 @@ class Index extends Component {
     private $max = 100;
     public $errorMessage = '';
     public $passphrase = [];
+
+    public $passphraseHistory = [];
 
     public function generate() {
         if($this->size < $this->min || $this->size > $this->max) {
@@ -30,6 +35,13 @@ class Index extends Component {
                     array_push($wordList, $line);
                 }
                 $this->passphrase = collect($wordList)->random($this->size)->toArray();
+                $history = Passphrase::create([
+                    'user_id' => Auth::id(),
+                    'passphrase' => Crypt::encryptString(json_encode($this->passphrase)),
+                ]);
+                if($history) {
+                    array_push($this->passphraseHistory, $this->passphrase);
+                }
             } catch (\Exception $e) {
                 //handle error
                 // echo 'Error reading file: ' . $e->getMessage();
@@ -38,6 +50,36 @@ class Index extends Component {
             echo 'File does not exist.';
         }
     }
+
+    public function mount() {
+        // Fetch encrypted passphrases for the authenticated user
+        $passphrases = Passphrase::where('user_id', Auth::id())
+            ->select('passphrase', 'created_at')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // Decrypt passphrases and group them by day
+        $groupedPassphrases = $passphrases->map(function ($item) {
+            $decryptedJson = Crypt::decrypt($item->passphrase);
+            return [
+                'passphrase' => json_decode($decryptedJson, true),
+                'created_at' => $item->created_at,
+            ];
+        })->groupBy(function ($item) {
+            return Carbon::parse($item['created_at'])->format('Y-m-d');
+        })->toArray();
+
+        // Add the newly generated passphrase to today's group
+        $today = Carbon::now()->format('Y-m-d');
+        if (!isset($groupedPassphrases[$today])) {
+            $groupedPassphrases[$today] = [];
+        }
+        $groupedPassphrases[$today][] = [
+            'passphrase' => $this->passphrase,
+            'created_at' => Carbon::now()->toDateTimeString(),
+        ];
+    }
+
     public function render() {
         return view('livewire.dashboard.index');
     }

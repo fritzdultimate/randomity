@@ -198,7 +198,21 @@
                     <div class="border-b border-b-slate-300 w-full pb-2"></div>
 
                     <ul class="p-4">
-                        <li class="px-6 py-2 w-full rounded-full bg-slate-200 text-slate-700 border border-slate-300 border-opacity-50 text-xs font-medium">hello daniel klotthin facecap kitchen ...</li>
+                        <li class="flex items-center px-6 py-2 w-full rounded-full bg-slate-200 text-slate-700 border border-slate-300 border-opacity-50 text-xs font-medium">
+                            <span>hello daniel klotthin facecap kitchen...</span>
+
+                            <div class="ml-auto p-2 rounded-full relative" @click="copyToClipboard()">
+                                <x-solar-copy-bold-duotone class="h-4 w-4 text-blue-600 cursor-pointer hover:animate-pulse focus:animate-pulse transition-all duration-200" />
+
+                                {{-- Tooltip --}}
+                                <div x-show="tooltipVisible" x-transition class="absolute top-[-30px] left-0 bg-gray-700 text-slate-200 text-xs px-2 py-1 rounded shadow-lg opacity-95">
+                                    Copied!
+
+                                    <div class="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-t-[6px] border-t-gray-700 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent"></div>
+                                </div>
+                                {{--! Tooltip --}}
+                            </div>
+                        </li>
                     </ul>
                 </div>
 
