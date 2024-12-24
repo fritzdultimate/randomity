@@ -1,4 +1,5 @@
-<div class="flex flex-col p-6 lg:justify-center" id="generate-passphrase" x-data="{
+<div class="flex flex-col p-6" id="generate-passphrase" x-data="{
+    size: 12,
     passphrase: $wire.entangle('passphrase'),
     tooltipVisible: false,
     copyToClipboard: (passphraseArg = null) => {
@@ -38,7 +39,7 @@
         }
 }">
     <!-- Skeleton Item -->
-    <div class="flex flex-wrap gap-2 md:gap-4 lg:ml-52 justify-center">
+    <div class="flex flex-wrap gap-2 md:gap-4 justify-center lg:justify-start">
         <template x-if="!passphrase.length">
             <template x-for="n of size" :key="n">
                 <div class="skeleton-box w-24 h-6 rounded bg-slate-300"></div>
@@ -52,19 +53,22 @@
     </div>
 
     {{-- Initial Generate Button --}}
-    <div class="flex w-full md:max-w-lg mx-auto mt-5 lg:mt-10" x-show="!passphrase.length">
-        <input type="button" class="w-full rounded-full text-sky-50 bg-sky-700 py-2 px-4 font-semibold text-sm hover:bg-sky-900 cursor-pointer" wire:loading.remove wire:target='generate' wire:click='generate' value="Generate">
+    <div class="flex flex-col w-full md:max-w-lg mx-auto mt-5 lg:mt-10" x-show="!passphrase.length">
+        <input type="button" class="w-full rounded-full text-sky-50 bg-sky-700 py-2 px-4 font-semibold text-sm hover:bg-sky-900 cursor-pointer" wire:loading.remove wire:click='generate' value="Generate">
 
         <div class="w-full mx-auto hidden" wire:loading wire:target='generate' wire:loading.class='flex'>
             <div class="flex justify-center">
                 <div class="animate-spin rounded-full h-6 w-6 border-t-2 border-blue-600 border-solid border-b-2 border-b-red-500"></div>
             </div>
         </div>
+        @if ($errorMessage)
+            <p class="text-red-500 text-base text-center py-4">{{ $errorMessage }}</p>
+        @endif
     </div>
 
     {{-- After Render Copy and Generate Button --}}
     <div class="flex justify-center gap-2 w-full mt-10" x-show="!!passphrase.length">
-        <button class="relative rounded-full bg-sky-700 text-sky-50 text-xs px-5 py-2 hover:bg-sky-800" @click="copyToClipboard()">
+        <button class="relative rounded-full bg-sky-700 text-sky-50 text-xs px-5 py-2 hover:bg-sky-800" @click="copyToClipboard()" wire:loading.class='bg-slate-500' wire:loading.attr='disabled'>
             <span class="font-semibold">Copy</span>
             {{-- Tooltip --}}
             <div x-show="tooltipVisible" x-transition class="absolute top-[-30px] left-0 bg-gray-700 text-slate-200 text-xs px-2 py-1 rounded shadow-lg opacity-95">
@@ -76,7 +80,7 @@
         </button>
 
         <button class="rounded-full bg-sky-700 text-sky-50 text-xs px-5 py-2 font-semibold hover:bg-sky-800 flex" wire:target='generate' wire:loading.attr='disabled' wire:loading.class='bg-slate-500 hover:bg-slate-500' @click="copyToClipboard()">
-            <span wire:loading.remove wire:target='generate' wire:click='generate'>
+            <span wire:loading.remove wire:click='generate'>
                 Copy & Generate
             </span>
 
@@ -84,7 +88,7 @@
         </button>
 
         <button class="rounded-full bg-sky-700 text-sky-50 text-xs px-5 py-2 font-semibold hover:bg-sky-800 flex" wire:target='generate' wire:loading.attr='disabled' wire:loading.class='bg-slate-500 hover:bg-slate-500'>
-            <span wire:loading.remove wire:target='generate' wire:click='generate'>Regenerate</span>
+            <span wire:loading.remove wire:click='generate'>Regenerate</span>
             <div wire:loading wire:target='generate' wire:loading.class='flex' class="animate-spin rounded-full h-4 w-4 border-t-2 border-white border-solid hidden"></div>
         </button>
 

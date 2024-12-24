@@ -5,11 +5,17 @@ namespace App\Livewire\Dashboard;
 use App\Models\Passphrase;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 
 class History extends Component {
     public $passphraseHistory = [];
+    public $viewingOnHistory = false;
+    public $count = 10;
+    #[Url()] 
+    public $page = '';
 
     #[On('append-passphrase')] 
     public function updateSize($data) {
@@ -28,18 +34,15 @@ class History extends Component {
         ])->forceDelete();
     }
 
-    public function render() {
-        return view('livewire.dashboard.history');
-    }
-
-    public function mount($count = 10) {
+    public function mount($count = 10, $history = false) {
+        $this->count = $count;
+        $this->viewingOnHistory = $history;
         // Fetch passphrases for the authenticated user
         $passphrases = Passphrase::where('user_id', Auth::id())
             ->select('passphrase', 'created_at', 'id')
-            ->latest()
-            ->take($count)
-            // ->orderBy('created_at', 'desc')
-            ->get();
+            ->orderBy('created_at', 'desc')
+            ->paginate($count);
+
         // group them by day
         $groupedPassphrases = $passphrases->map(function ($item) {
             return [
@@ -60,5 +63,15 @@ class History extends Component {
         })->toArray();
 
         $this->passphraseHistory = $groupedPassphrases;
+    }
+
+    public function render() {
+        $phrase = Passphrase::where('user_id', Auth::id())
+            ->select('passphrase', 'created_at', 'id')
+            ->orderBy('created_at', 'desc')
+            ->paginate($this->count);
+
+        // dd($passphrases);
+        return view('livewire.dashboard.history', compact('phrase'));
     }
 }

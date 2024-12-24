@@ -13,8 +13,6 @@ use Livewire\Component;
 #[Layout('components.layouts.dashboard')]
 class Index extends Component {
     public $size = 12;
-    private $min = 2;
-    private $max = 100;
     public $errorMessage = '';
     public $passphrase = [];
 

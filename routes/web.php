@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Middleware\AuthenticateUser;
 use App\Livewire\Auth\ForgotPassword;
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
 use App\Livewire\Auth\ResetPassword;
+use App\Livewire\Dashboard\HistoryView;
 use App\Livewire\Dashboard\Index;
 use App\Livewire\Guest\Home;
 use Illuminate\Support\Facades\Route;
@@ -38,8 +40,12 @@ Route::get('account/recovery/pending', function() {
 
 Route::get('account/reset/password', ResetPassword::class)->name('account-reset-password');
 
-Route::get('app/user/dashboard', Index::class)->name('dashboard');
-
 Route::get('403/forbidden/expired', function() {
     return view('errors.link-expired');
 })->name('link-expired');
+
+
+Route::middleware([AuthenticateUser::class])->prefix('app/user')->group(function () {
+    Route::get('history', HistoryView::class)->name('history');
+    Route::get('dashboard', Index::class)->name('dashboard');
+});

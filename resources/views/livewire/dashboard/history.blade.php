@@ -31,8 +31,9 @@
         <div class="text-slate-900 text-base font-semibold">
             <span>History</span>
         </div>
-
-        <a href="/" class="text-sky-900 text-sm font-medium">See all</a>
+        @if (!$viewingOnHistory)
+            <a href="{{ route('history') }}" class="text-sky-900 text-sm font-medium">See all</a>
+        @endif
     </div>
     <div class="border-b border-b-slate-300 w-full pb-2"></div>
 
@@ -43,10 +44,10 @@
                 <span x-text="'(' + histories.length + ' record' + (histories.length > 1 ? 's)' : ')')" class="text-[10px] text-slate-500 font-medium"></span>
             </div>
 
-            <ul>
+            <ul class="flex flex-wrap gap-2">
                 <template x-for="(phrase, index) of histories" :key="index">
-                    <li class="flex items-center px-6 py-2 w-full rounded-full bg-slate-200 text-slate-700 border border-slate-300 border-opacity-50 text-xs font-medium hover:bg-slate-300 cursor-pointer mb-3" x-data="{tooltip: false}">
-                        <span x-text="phrase.passphrase.length > 7 ? phrase.passphrase.slice(0, 7).join(' ') + '...' : phrase.passphrase.join(' ')"></span>
+                    <li class="flex items-center px-6 py-2 w-full lg:w-auto rounded-full bg-slate-200 text-slate-700 border border-slate-300 border-opacity-50 text-xs font-medium hover:bg-slate-300 cursor-pointer mb-3" x-data="{tooltip: false}">
+                        <span x-text="phrase.passphrase.length > 6 ? phrase.passphrase.slice(0, 6).join(' ') + '...' : phrase.passphrase.join(' ')"></span>
 
                         <div class="ml-auto flex items-center">
                             <div class="relative p-2 mr-1 rounded-full" @click="() => {
@@ -88,4 +89,9 @@
             </ul>
         </div>
     </template>
+    @if ($viewingOnHistory)
+        <div class="px-8 py-4">
+            {{ $phrase->links() }}
+        </div>
+    @endif
 </div>

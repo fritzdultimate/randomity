@@ -24,9 +24,9 @@ class GeneratePassphrase extends Component {
     public function generate() {
         if($this->size < $this->min || $this->size > $this->max) {
             $this->errorMessage = "Minimum and maximum size of phrase to generate are $this->min and $this->max respectively";
-
             return;
         }
+
         $filePath = storage_path('app/data/bip-0039/english.txt');
         if (File::exists($filePath)) {
             $wordList = [];
